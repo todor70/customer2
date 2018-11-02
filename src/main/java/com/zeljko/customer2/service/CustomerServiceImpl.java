@@ -39,9 +39,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer update(long id) {
+    public Customer update(long id, Customer update) {
         Customer customer = customerRepository.findOne(id);
+        if( update.getLastName() != null ) {
+            customer.setLastName(update.getLastName());
+        }
         return customerRepository.save(customer);
     }
-
 }

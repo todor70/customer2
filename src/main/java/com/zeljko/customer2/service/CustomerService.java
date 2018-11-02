@@ -10,7 +10,7 @@ public interface CustomerService {
 
     Customer read(long id);
 
-    Customer update(long id);
+    Customer update(long id, Customer customer);
 
     void delete(long id);
 }
