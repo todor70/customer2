@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer read(long id) {
-        return customerRepository.findOne(id);
+        return customerRepository.findById(id).get();
     }
 
     @Override
@@ -35,12 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(long id) {
-        customerRepository.delete(id);
+        customerRepository.deleteById(id);
     }
 
     @Override
     public Customer update(long id, Customer update) {
-        Customer customer = customerRepository.findOne(id);
+        Customer customer = customerRepository.findById(id).get();
         if( update.getLastName() != null ) {
             customer.setLastName(update.getLastName());
         }
