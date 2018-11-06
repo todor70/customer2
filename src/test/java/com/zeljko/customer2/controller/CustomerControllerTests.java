@@ -1,95 +1,80 @@
 package com.zeljko.customer2.controller;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
-import com.zeljko.customer2.Customer2Application;
+//import com.zeljko.customer2.dao.CustomerDAO;
+import com.zeljko.customer2.entity.Customer;
+//import com.zeljko.springdemo.repository.CustomerRepository;
+//import org.assertj.core.util.Lists;
+import com.zeljko.customer2.service.CustomerService;
+//import com.zeljko.springdemo.service.CustomerServiceImpl;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+//import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Customer2Application.class)
-@SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTests {
 
-    private MockMvc mockMvc;
+    @Mock
+    private CustomerService customerService;
 
-    @Autowired
-    private WebApplicationContext wac;
+    @InjectMocks
+    private CustomerController customerController;
 
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+   /* @Before
+    public void setup(){
+        MockitoAnnotations.initMocks(this);
+    }*/
+
+    @Test
+    public void list(){
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(new Customer(1L,"mare","maric","mare@gmail.com"));
+        customerList.add(new Customer(2L,"pera","peric","pera@gmail.com"));
+        when(customerController.list()).thenReturn(customerList);
+        List<Customer> result = Lists.newArrayList(customerController.list());
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void read(){
+        Customer customer = new Customer(3L,"zare","zaric","zare@gmail.com");
+        when(customerService.read(3L)).thenReturn(customer);
+        Customer result = customerController.read(3L);
+        assertEquals("3",result.getId().toString());
+        assertEquals("zare", result.getFirstName());
+        assertEquals("zaric", result.getLastName());
+        assertEquals("zare@gmail.com", result.getEmail());
+    }
+
+    @Test
+    public void create(){
+        Customer customer = new Customer(3L,"mare","maric","mare@gmail.com");
+        when(customerService.create(customer)).thenReturn(customer);
+        Customer result = customerController.create(customer);
+        assertEquals("3", result.getId().toString());
+        assertEquals("mare", result.getFirstName());
+        assertEquals("maric", result.getLastName());
+        assertEquals("mare@gmail.com", result.getEmail());
 
     }
 
     @Test
-    public void verifyList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/customers/").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(3))).andDo(print());
+    public void delete(){
+        customerController.delete(3L);
+        verify(customerService, times(1)).delete(3L);
     }
-
-    @Test
-    public void verifyRead() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/customers/1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.firstName").exists())
-                .andExpect(jsonPath("$.lastName").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.firstName").value("marko"))
-                .andExpect(jsonPath("$.lastName").value("markovic"))
-                .andExpect(jsonPath("$.email").value("marko@gmail.com"))
-                .andDo(print());
-    }
-
-    @Test
-    public void verifyCreate() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/customers/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\" : \"nemanja\", \"lastName\" : \"nemanjic\", \"email\" : \"nemanja@gmail.com\" }")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.firstName").exists())
-                .andExpect(jsonPath("$.lastName").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.firstName").value("nemanja"))
-                .andExpect(jsonPath("$.lastName").value("nemanjic"))
-                .andExpect(jsonPath("$.email").value("nemanja@gmail.com"))
-                .andDo(print());
-    }
-
-
-    @Test
-    public void verifyUpdate() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/customers/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\" : \"1\", \"firstName\" : \"nemanja\", \"lastName\" : \"nemanjic\", \"email\" : \"nemanja@gmail.com\" }")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.firstName").exists())
-                .andExpect(jsonPath("$.lastName").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.firstName").value("nemanja"))
-                .andExpect(jsonPath("$.lastName").value("nemanjic"))
-                .andExpect(jsonPath("$.email").value("nemanja@gmail.com"))
-                .andDo(print());
-    }
-
 }

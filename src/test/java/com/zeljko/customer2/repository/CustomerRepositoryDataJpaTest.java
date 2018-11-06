@@ -11,21 +11,23 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CustomerRepositoryTest {
+public class CustomerRepositoryDataJpaTest {
 
     @Autowired
     private CustomerRepository customerRepository;
 
     @Test
-    public void testFindAllCustomers() throws Exception{
+    public void findAllCustomers() throws Exception{
         Iterable<Customer> customers = customerRepository.findAll();
         assertEquals(2, IterableUtil.sizeOf(customers));
     }
 
     @Test
-    public void testFindCustomerById() throws Exception{
+    public void findCustomerById() throws Exception{
         Customer customer = customerRepository.findById(1L).get();
         assertEquals("marko",customer.getFirstName());
+        assertEquals("markovic", customer.getLastName());
+        assertEquals("marko@gmail.com", customer.getEmail());
     }
 
 }

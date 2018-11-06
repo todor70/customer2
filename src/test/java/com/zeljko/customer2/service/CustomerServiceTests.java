@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +16,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTests {
 
     @Mock
@@ -28,10 +29,10 @@ public class CustomerServiceTests {
     @InjectMocks
     private CustomerServiceImpl customerService;
 
-    @Before
+    /*@Before
     public void setup(){
         MockitoAnnotations.initMocks(this);
-    }
+    }*/
 
     @Test
     public void list(){
