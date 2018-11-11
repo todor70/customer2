@@ -1,11 +1,7 @@
 package com.zeljko.customer2.controller;
 
-//import com.zeljko.customer2.dao.CustomerDAO;
 import com.zeljko.customer2.entity.Customer;
-//import com.zeljko.springdemo.repository.CustomerRepository;
-//import org.assertj.core.util.Lists;
 import com.zeljko.customer2.service.CustomerService;
-//import com.zeljko.springdemo.service.CustomerServiceImpl;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;

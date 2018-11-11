@@ -34,16 +34,36 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer update(long id, Customer customerUpdate) {
+        Customer customer = customerRepository.findById(id).get();
+
+        customer.setFirstName(customerUpdate.getFirstName());
+        customer.setLastName(customerUpdate.getLastName());
+        customer.setEmail(customerUpdate.getEmail());
+
+        return customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer patch(long id, Customer customerPatch) {
+        Customer customer = customerRepository.findById(id).get();
+
+        if (customerPatch.getFirstName() != null) {
+            customer.setFirstName(customerPatch.getFirstName());
+        }
+        if (customerPatch.getLastName() != null) {
+            customer.setLastName(customerPatch.getLastName());
+        }
+        if (customerPatch.getEmail() != null) {
+            customer.setEmail(customerPatch.getEmail());
+        }
+
+        return customerRepository.save(customer);
+    }
+
+    @Override
     public void delete(long id) {
         customerRepository.deleteById(id);
     }
 
-    @Override
-    public Customer update(long id, Customer update) {
-        Customer customer = customerRepository.findById(id).get();
-        if( update.getLastName() != null ) {
-            customer.setLastName(update.getLastName());
-        }
-        return customerRepository.save(customer);
-    }
 }

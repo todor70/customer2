@@ -40,10 +40,14 @@ public class CustomerController {
         return customerService.update(id, customer);
     }
 
+    @RequestMapping( value = "/{id}", method = RequestMethod.PATCH )
+    public Customer patch(@PathVariable(value="id") long id, @RequestBody Customer customer){
+        return customerService.patch(id, customer);
+    }
+
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
     public void delete(@PathVariable(value="id") long id){
         customerService.delete(id);
     }
-
 
 }
