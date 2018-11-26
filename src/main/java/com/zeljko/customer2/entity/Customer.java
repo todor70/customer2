@@ -1,87 +1,69 @@
 package com.zeljko.customer2.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
 
-@Entity
-@Table(name="customer")
 public class Customer {
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
-	
-	@Column(name="first_name")
-	@NotNull(message="required")
-	@Size(min=1, message="required")
-	private String firstName;
-	
-	@Column(name="last_name")
-	@NotNull(message="required")
-	@Size(min=1, message="required")
-	private String lastName;
-	
-	@Column(name="email")
-	@NotNull(message="required")
-	@Size(min=1, message="required")
-	private String email;
-	
-	public Customer() {
-		
-	}
+    @Id
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
 
-	public Customer(Long id, String firstName, String lastName, String email) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
+    public Customer() {
 
-	public Customer(String firstName, String lastName, String email) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Customer(String id, String firstName, String lastName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Customer(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
-	}
-		
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+    }
+
 }
 
 

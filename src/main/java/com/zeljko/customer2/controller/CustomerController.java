@@ -31,22 +31,22 @@ public class CustomerController {
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.GET )
-    public Customer read(@PathVariable(value="id") long id){
+    public Customer read(@PathVariable(value="id") String id){
         return customerService.read(id);
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.PUT )
-    public Customer update(@PathVariable(value="id") long id, @RequestBody Customer customer){
+    public Customer update(@PathVariable(value="id") String id, @RequestBody Customer customer){
         return customerService.update(id, customer);
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.PATCH )
-    public Customer patch(@PathVariable(value="id") long id, @RequestBody Customer customer){
+    public Customer patch(@PathVariable(value="id") String id, @RequestBody Customer customer){
         return customerService.patch(id, customer);
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public void delete(@PathVariable(value="id") long id){
+    public void delete(@PathVariable(value="id") String id){
         customerService.delete(id);
     }
 

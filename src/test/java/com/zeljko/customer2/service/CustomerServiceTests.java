@@ -37,8 +37,8 @@ public class CustomerServiceTests {
     @Test
     public void list(){
         List<Customer> customerList = new ArrayList<>();
-        customerList.add(new Customer(1L,"mare","maric","mare@gmail.com"));
-        customerList.add(new Customer(2L,"pera","peric","pera@gmail.com"));
+        customerList.add(new Customer("mare","maric","mare@gmail.com"));
+        customerList.add(new Customer("pera","peric","pera@gmail.com"));
         when(customerRepository.findAll()).thenReturn(customerList);
 
         List<Customer> result = Lists.newArrayList(customerService.list());
@@ -47,10 +47,10 @@ public class CustomerServiceTests {
 
     @Test
     public void create(){
-        Customer customer = new Customer(3L,"mare","maric","mare@gmail.com");
+        Customer customer = new Customer("5bfc48f7dc45c0149cbf3cb8","mare","maric","mare@gmail.com");
         when(customerRepository.save(customer)).thenReturn(customer);
         Customer result = customerService.create(customer);
-        assertEquals("3", result.getId().toString());
+        assertEquals("5bfc48f7dc45c0149cbf3cb8", result.getId().toString());
         assertEquals("mare", result.getFirstName());
         assertEquals("maric", result.getLastName());
         assertEquals("mare@gmail.com", result.getEmail());
@@ -59,8 +59,8 @@ public class CustomerServiceTests {
 
     @Test
     public void delete(){
-        customerService.delete(3L);
-        verify(customerRepository, times(1)).deleteById(3L);
+        customerService.delete("5bfc48f7dc45c0149cbf3cb8");
+        verify(customerRepository, times(1)).deleteById("5bfc48f7dc45c0149cbf3cb8");
     }
 
 

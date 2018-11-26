@@ -1,14 +1,11 @@
 package com.zeljko.customer2.service;
 
-import javax.transaction.Transactional;
-
 import com.zeljko.customer2.entity.Customer;
 import com.zeljko.customer2.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-//@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
@@ -24,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer read(long id) {
+    public Customer read(String id) {
         return customerRepository.findById(id).get();
     }
 
@@ -34,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer update(long id, Customer customerUpdate) {
+    public Customer update(String id, Customer customerUpdate) {
         Customer customer = customerRepository.findById(id).get();
 
         customer.setFirstName(customerUpdate.getFirstName());
@@ -45,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer patch(long id, Customer customerPatch) {
+    public Customer patch(String id, Customer customerPatch) {
         Customer customer = customerRepository.findById(id).get();
 
         if (customerPatch.getFirstName() != null) {
@@ -62,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(String id) {
         customerRepository.deleteById(id);
     }
 

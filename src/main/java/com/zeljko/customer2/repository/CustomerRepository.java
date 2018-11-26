@@ -1,10 +1,8 @@
 package com.zeljko.customer2.repository;
 
 import com.zeljko.customer2.entity.Customer;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
+public interface CustomerRepository extends MongoRepository<Customer, String> {
 
 }

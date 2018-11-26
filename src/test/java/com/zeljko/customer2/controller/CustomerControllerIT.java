@@ -1,6 +1,5 @@
 package com.zeljko.customer2.controller;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -23,7 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Customer2Application.class)
@@ -51,27 +49,7 @@ public class CustomerControllerIT {
         Assert.assertNotNull(wac.getBean("customerController"));
     }
 
-    @Test
-    public void verifyList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/customers/")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(2))).andDo(print());
-    }
 
-    @Test
-    public void verifyRead() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/customers/1")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.firstName").exists())
-                .andExpect(jsonPath("$.lastName").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.firstName").value("marko"))
-                .andExpect(jsonPath("$.lastName").value("markovic"))
-                .andExpect(jsonPath("$.email").value("marko@gmail.com"))
-                .andDo(print());
-    }
 
     @Test
     public void verifyCreate() throws Exception {
@@ -79,48 +57,12 @@ public class CustomerControllerIT {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"firstName\" : \"nemanja\", \"lastName\" : \"nemanjic\", \"email\" : \"nemanja@gmail.com\" }")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.firstName").exists())
                 .andExpect(jsonPath("$.lastName").exists())
                 .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.firstName").value("nemanja"))
                 .andExpect(jsonPath("$.lastName").value("nemanjic"))
                 .andExpect(jsonPath("$.email").value("nemanja@gmail.com"))
-                .andDo(print());
-    }
-
-    @Test
-    public void verifyPut() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/customers/2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\" : \"pera\", \"lastName\" : \"peric\", \"email\" : \"petar@gmail.com\" }")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.firstName").exists())
-                .andExpect(jsonPath("$.lastName").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.firstName").value("pera"))
-                .andExpect(jsonPath("$.lastName").value("peric"))
-                .andExpect(jsonPath("$.email").value("petar@gmail.com"))
-                .andDo(print());
-    }
-
-    @Test
-    public void verifyPatch() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.patch("/customers/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"lastName\" : \"maric\", \"email\" : \"mare@gmail.com\" }")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.firstName").exists())
-                .andExpect(jsonPath("$.lastName").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.firstName").value("marko"))
-                .andExpect(jsonPath("$.lastName").value("maric"))
-                .andExpect(jsonPath("$.email").value("mare@gmail.com"))
                 .andDo(print());
     }
 

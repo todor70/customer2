@@ -8,11 +8,11 @@ public interface CustomerService {
 
     Customer create(Customer customer);
 
-    Customer read(long id);
+    Customer read(String id);
 
-    Customer update(long id, Customer customer);
+    Customer update(String id, Customer customer);
 
-    Customer patch(long id, Customer customer);
+    Customer patch(String id, Customer customer);
 
-    void delete(long id);
+    void delete(String id);
 }
