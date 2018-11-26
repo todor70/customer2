@@ -7,4 +7,3 @@ Spring Boot REST API with H2 database and Postman
 ![](images/put.png)
 ![](images/patch.png)
 ![](images/delete.png)
-![](images/h2.png)
