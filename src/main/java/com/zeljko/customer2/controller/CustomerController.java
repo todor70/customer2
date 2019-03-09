@@ -3,11 +3,7 @@ package com.zeljko.customer2.controller;
 import com.zeljko.customer2.entity.Customer;
 import com.zeljko.customer2.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
@@ -20,32 +16,32 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @RequestMapping( value = "/", method = RequestMethod.GET )
+    @GetMapping("/")
     public Iterable<Customer> list(){
         return customerService.list();
     }
 
-    @RequestMapping( value = "/", method = RequestMethod.POST )
+    @PostMapping("/")
     public Customer create(@RequestBody Customer customer){
         return customerService.create(customer);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.GET )
+    @GetMapping("/{id}")
     public Customer read(@PathVariable(value="id") String id){
         return customerService.read(id);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.PUT )
+    @PutMapping("/{id}")
     public Customer update(@PathVariable(value="id") String id, @RequestBody Customer customer){
         return customerService.update(id, customer);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.PATCH )
+    @PatchMapping("/{id}")
     public Customer patch(@PathVariable(value="id") String id, @RequestBody Customer customer){
         return customerService.patch(id, customer);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable(value="id") String id){
         customerService.delete(id);
     }
