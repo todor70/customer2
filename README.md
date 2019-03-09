@@ -1,5 +1,5 @@
 # customer2
-Spring Boot REST API with H2 database and Postman
+Spring Boot REST API with Embedded MongoDB and Postman
 
 ![](images/get.png)
 ![](images/get_one.png)
@@ -7,4 +7,3 @@ Spring Boot REST API with H2 database and Postman
 ![](images/put.png)
 ![](images/patch.png)
 ![](images/delete.png)
-![](images/h2.png)
